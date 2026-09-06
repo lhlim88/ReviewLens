@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ReviewLens - Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body class="dashboard-page">
+  <header class="dash-header">
+    <p class="dash-eyebrow">ReviewLens</p>
+    <h1>Annotation &amp; Model Dashboard</h1>
+    <a class="dash-back" href="{{ url_for('store_home') }}">&larr; Back to store</a>
+  </header>
+
+  <section class="stat-row">
+    <div class="stat-card">
+      <span class="stat-number">{{ total }}</span>
+      <span class="stat-label">Reviews annotated</span>
+    </div>
+    {% if metrics %}
+    <div class="stat-card stat-card-accent">
+      <span class="stat-number">{{ (metrics.accuracy * 100) | round(0) }}%</span>
+      <span class="stat-label">Model accuracy</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">{{ metrics.total_labeled }}</span>
+      <span class="stat-label">Used for training (conf &ge; {{ metrics.min_confidence_used }})</span>
+    </div>
+    {% endif %}
+  </section>
+
+  {% if not metrics %}
+  <p class="empty-note">No trained model yet — run <code>train_model.py</code> to populate model performance stats.</p>
+  {% endif %}
+
+  <section class="dash-grid">
+    <div class="panel">
+      <h2>Sentiment distribution</h2>
+      <canvas id="sentimentChart"></canvas>
+    </div>
+
+    <div class="panel">
+      <h2>Category breakdown</h2>
+      <canvas id="categoryChart"></canvas>
+    </div>
+
+    <div class="panel">
+      <h2>Confidence distribution</h2>
+      <canvas id="confidenceChart"></canvas>
+    </div>
+
+    {% if metrics %}
+    <div class="panel">
+      <h2>Confusion matrix</h2>
+      <img class="confusion-img" src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Confusion matrix">
+    </div>
+    {% endif %}
+  </section>
+
+  {% if metrics and metrics.classification_report %}
+  <section class="panel panel-wide">
+    <h2>Precision / recall / F1 by class</h2>
+    <table class="report-table">
+      <thead>
+        <tr><th>Class</th><th>Precision</th><th>Recall</th><th>F1-score</th><th>Support</th></tr>
+      </thead>
+      <tbody>
+        {% for label, row in metrics.classification_report.items() %}
+          {% if row is mapping and label not in ["accuracy"] %}
+          <tr>
+            <td>{{ label }}</td>
+            <td>{{ (row.precision * 100) | round(0) }}%</td>
+            <td>{{ (row.recall * 100) | round(0) }}%</td>
+            <td>{{ (row["f1-score"] * 100) | round(0) }}%</td>
+            <td>{{ row.support | round(0) }}</td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  {% endif %}
+
+  <script>
+    const sentimentLabels = {{ sentiment_labels | tojson }};
+    const sentimentValues = {{ sentiment_values | tojson }};
+    const categoryLabels = {{ category_labels | tojson }};
+    const categoryValues = {{ category_values | tojson }};
+    const confidenceLabels = {{ confidence_labels | tojson }};
+    const confidenceValues = {{ confidence_values | tojson }};
+
+    const palette = { negative: '#c0523f', neutral: '#8a8577', positive: '#3f7d5c', accent: '#3a5a78' };
+
+    new Chart(document.getElementById('sentimentChart'), {
+      type: 'doughnut',
+      data: {
+        labels: sentimentLabels,
+        datasets: [{
+          data: sentimentValues,
+          backgroundColor: sentimentLabels.map(l => palette[l.toLowerCase()] || '#999')
+        }]
+      },
+      options: { plugins: { legend: { position: 'bottom' } } }
+    });
+
+    new Chart(document.getElementById('categoryChart'), {
+      type: 'bar',
+      data: {
+        labels: categoryLabels,
+        datasets: [{ label: 'Count', data: categoryValues, backgroundColor: palette.accent }]
+      },
+      options: {
+        indexAxis: 'y',
+        plugins: { legend: { display: false } },
+        scales: { x: { beginAtZero: true } }
+      }
+    });
+
+    new Chart(document.getElementById('confidenceChart'), {
+      type: 'bar',
+      data: {
+        labels: confidenceLabels,
+        datasets: [{ label: 'Count', data: confidenceValues, backgroundColor: palette.neutral }]
+      },
+      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+    });
+  </script>
+</body>
+</html>

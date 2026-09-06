@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ReviewLens - Annotate</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Annotate Review</h1>
+  <p>Labeled so far: {{ annotated_count }}</p>
+
+  <div class="review-card">
+    <p><strong>Star rating:</strong> {{ rating }}</p>
+    <p><strong>Review:</strong> "{{ review_text }}"</p>
+  </div>
+
+  <form method="POST">
+    <input type="hidden" name="review_id" value="{{ review_id }}">
+
+    <label>Sentiment:
+      <select name="sentiment" required>
+        <option value="">-- select --</option>
+        <option value="Positive">Positive</option>
+        <option value="Neutral">Neutral</option>
+        <option value="Negative">Negative</option>
+      </select>
+    </label>
+    <br>
+
+    <label>Category:
+      <select name="category" required>
+        <option value="">-- select --</option>
+        <option value="Product Quality">Product Quality</option>
+        <option value="Shipping Issue">Shipping Issue</option>
+        <option value="Price/Value">Price/Value</option>
+        <option value="Customer Service">Customer Service</option>
+        <option value="Other">Other</option>
+      </select>
+    </label>
+    <br>
+
+    <label>Confidence:
+      <select name="confidence" required>
+        <option value="">-- select --</option>
+        <option value="1">1 - very unsure</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5 - very confident</option>
+      </select>
+    </label>
+    <br>
+
+    <label>Notes (optional):<br>
+      <textarea name="notes" rows="3" cols="50"></textarea>
+    </label>
+    <br>
+
+    <button type="submit">Submit &amp; Next</button>
+  </form>
+</body>
+</html>

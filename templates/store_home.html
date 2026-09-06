@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ReviewLens Store</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>ReviewLens Store</h1>
+  <p><a href="{{ url_for('dashboard') }}">View annotation dashboard</a></p>
+
+  <div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+      <h3><a href="{{ url_for('product_detail', product_id=product.id) }}">{{ product.name }}</a></h3>
+      <p>{{ product.price }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

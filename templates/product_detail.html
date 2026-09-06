@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ReviewLens - {{ product.name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <p><a href="{{ url_for('store_home') }}">&larr; Back to store</a></p>
+  <h1>{{ product.name }}</h1>
+  <p>{{ product.price }}</p>
+
+  {% if not model_loaded %}
+  <p><em>Model not loaded — run train_model.py first to see live predictions.</em></p>
+  {% endif %}
+
+  <h2>Reviews</h2>
+  {% for review in reviews %}
+  <div class="review-card">
+    {% if review.sentiment %}
+    <span class="badge badge-{{ review.sentiment | lower }}">
+      {{ review.sentiment }} ({{ (review.confidence * 100) | round(0) }}%)
+    </span>
+    {% endif %}
+    <p>"{{ review.text }}"</p>
+  </div>
+  {% else %}
+  <p>No reviews found for this product.</p>
+  {% endfor %}
+
+  <h2>Try it yourself</h2>
+  <textarea id="reviewInput" placeholder="Type a review..." rows="3" cols="50"></textarea><br>
+  <button onclick="checkSentiment()">Check Sentiment</button>
+  <div id="predictionResult"></div>
+
+  <script src="{{ url_for('static', filename='predict.js') }}"></script>
+</body>
+</html>

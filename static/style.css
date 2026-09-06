@@ -1,0 +1,130 @@
+/* ReviewLens - base styles */
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: white;
+}
+.badge-positive { background-color: #2e7d32; }
+.badge-negative { background-color: #c62828; }
+.badge-neutral  { background-color: #757575; }
+
+/* TODO: storefront grid, product card, annotation form styling */
+
+/* Dashboard */
+.dashboard-page {
+  font-family: -apple-system, "Segoe UI", sans-serif;
+  background: #f6f4ef;
+  color: #2b2a26;
+  margin: 0;
+  padding: 2.5rem 3rem 4rem;
+}
+
+.dash-header {
+  margin-bottom: 2rem;
+}
+.dash-eyebrow {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: #6b6558;
+}
+.dash-header h1 {
+  margin: 0.2rem 0 0.6rem;
+  font-size: 1.9rem;
+  font-weight: 650;
+}
+.dash-back {
+  color: #3a5a78;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.dash-back:hover { text-decoration: underline; }
+
+.stat-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.stat-card {
+  background: #fff;
+  border: 1px solid #e6e2d8;
+  border-radius: 10px;
+  padding: 1.1rem 1.5rem;
+  min-width: 180px;
+}
+.stat-card-accent {
+  background: #3a5a78;
+  border-color: #3a5a78;
+  color: #fff;
+}
+.stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.stat-label {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-top: 0.25rem;
+}
+
+.empty-note {
+  background: #fff8e6;
+  border: 1px solid #e8dcb0;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.panel {
+  background: #fff;
+  border: 1px solid #e6e2d8;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+.panel h2 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 650;
+  color: #4a473e;
+}
+.panel-wide {
+  grid-column: 1 / -1;
+}
+.confusion-img {
+  width: 100%;
+  max-width: 420px;
+  display: block;
+  margin: 0 auto;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.report-table th, .report-table td {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #eee7d9;
+}
+.report-table th {
+  color: #6b6558;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
