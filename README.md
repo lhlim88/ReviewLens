@@ -8,6 +8,10 @@ training, and live deployment to a demo storefront.
 Full pipeline documentation: see `docs/PROJECT_DOCUMENTATION.md`
 Annotation business rules and their revision history: see `GUIDELINES.md`
 
+**Live demo:** [reviewlens-x8xk.onrender.com](https://reviewlens-x8xk.onrender.com)
+(hosted on Render's free tier, the first load after a period of
+inactivity may take 30–60 seconds to spin up)
+
 ## What this project demonstrates
 
 - Data cleaning and balanced sampling from a real, messy, imbalanced dataset
