@@ -354,3 +354,9 @@ body {
   font-size: 0.95rem;
   min-height: 1.2rem;
 }
+
+.page-sub {
+  margin: 0 3rem 1.5rem;
+  color: #6b6558;
+  font-size: 0.92rem;
+}
