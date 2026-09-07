@@ -3,35 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <title>ReviewLens - {{ product.name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-  <p><a href="{{ url_for('store_home') }}">&larr; Back to store</a></p>
-  <h1>{{ product.name }}</h1>
-  <p>{{ product.price }}</p>
+<body class="dashboard-page">
+
+  <nav class="site-nav">
+    <a class="site-nav-brand" href="{{ url_for('store_home') }}">ReviewLens</a>
+    <div class="site-nav-links">
+      <a class="active" href="{{ url_for('store_home') }}">Store</a>
+      <a href="{{ url_for('annotate') }}">Annotate</a>
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    </div>
+  </nav>
+
+  <header class="dash-header">
+    <p class="dash-eyebrow"><a class="back-link" href="{{ url_for('store_home') }}">&larr; Back to store</a></p>
+    <h1>{{ product.icon | default('📦') }}&nbsp; {{ product.name }}</h1>
+    <p class="dash-sub">{{ product.price }}</p>
+  </header>
 
   {% if not model_loaded %}
-  <p><em>Model not loaded — run train_model.py first to see live predictions.</em></p>
+  <p class="empty-note">Model not loaded — run <code>train_model.py</code> first to see live predictions.</p>
   {% endif %}
 
-  <h2>Reviews</h2>
-  {% for review in reviews %}
-  <div class="review-card">
-    {% if review.sentiment %}
-    <span class="badge badge-{{ review.sentiment | lower }}">
-      {{ review.sentiment }} ({{ (review.confidence * 100) | round(0) }}%)
-    </span>
-    {% endif %}
-    <p>"{{ review.text }}"</p>
-  </div>
-  {% else %}
-  <p>No reviews found for this product.</p>
-  {% endfor %}
+  <section class="panel-wide">
+    <h2>Reviews, classified live</h2>
+    {% for review in reviews %}
+    <div class="review-row">
+      {% if review.sentiment %}
+      <span class="badge badge-{{ review.sentiment | lower }}">
+        {{ review.sentiment }} &middot; {{ (review.confidence * 100) | round(0) }}%
+      </span>
+      {% endif %}
+      <p class="review-text">&ldquo;{{ review.text }}&rdquo;</p>
+    </div>
+    {% else %}
+    <p>No reviews found for this product.</p>
+    {% endfor %}
+  </section>
 
-  <h2>Try it yourself</h2>
-  <textarea id="reviewInput" placeholder="Type a review..." rows="3" cols="50"></textarea><br>
-  <button onclick="checkSentiment()">Check Sentiment</button>
-  <div id="predictionResult"></div>
+  <section class="panel-wide try-it-panel">
+    <h2>Try it yourself</h2>
+    <p class="dash-sub" style="margin-bottom:0.8rem;">Type any review and see how the model classifies it in real time.</p>
+    <textarea id="reviewInput" class="try-it-input" placeholder="e.g. Battery life is amazing but the screen scratches easily..." rows="3"></textarea>
+    <button class="try-it-button" onclick="checkSentiment()">Check Sentiment</button>
+    <div id="predictionResult" class="try-it-result"></div>
+  </section>
 
   <script src="{{ url_for('static', filename='predict.js') }}"></script>
 </body>

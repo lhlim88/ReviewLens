@@ -3,19 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <title>ReviewLens Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-  <h1>ReviewLens Store</h1>
-  <p><a href="{{ url_for('dashboard') }}">View annotation dashboard</a></p>
+<body class="dashboard-page">
+
+  <nav class="site-nav">
+    <a class="site-nav-brand" href="{{ url_for('store_home') }}">ReviewLens</a>
+    <div class="site-nav-links">
+      <a class="active" href="{{ url_for('store_home') }}">Store</a>
+      <a href="{{ url_for('annotate') }}">Annotate</a>
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    </div>
+  </nav>
+
+  <header class="dash-header">
+    <p class="dash-eyebrow">Live model demo</p>
+    <h1>ReviewLens Store</h1>
+    <p class="dash-sub">Every review below is classified live by a sentiment model trained on hand-annotated data — pick a product to see it in action.</p>
+  </header>
 
   <div class="product-grid">
     {% for product in products %}
-    <div class="product-card">
-      <h3><a href="{{ url_for('product_detail', product_id=product.id) }}">{{ product.name }}</a></h3>
-      <p>{{ product.price }}</p>
-    </div>
+    <a class="product-card" href="{{ url_for('product_detail', product_id=product.id) }}">
+      <div class="product-thumb">{{ product.icon | default('📦') }}</div>
+      <div class="product-info">
+        <h3>{{ product.name }}</h3>
+        <p class="product-price">{{ product.price }}</p>
+      </div>
+      <span class="product-cta">View reviews &rarr;</span>
+    </a>
     {% endfor %}
   </div>
+
 </body>
 </html>

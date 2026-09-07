@@ -27,12 +27,12 @@ DEMO_MODE = os.environ.get("DEMO_MODE", "false").lower() == "true"
 
 # Fake storefront products, mapped to real product_name substrings in reviews.db
 PRODUCTS = [
-    {"id": 1, "name": "Fire 7 Tablet", "price": "$49.99", "match": "Fire Tablet, 7 Display"},
-    {"id": 2, "name": "Echo Speaker", "price": "$89.99", "match": "Echo (White)"},
-    {"id": 3, "name": "Kindle Paperwhite", "price": "$119.99", "match": "Kindle Paperwhite"},
-    {"id": 4, "name": "Fire HD 8 Tablet", "price": "$79.99", "match": "All-New Fire HD 8 Tablet, 8 HD Display, Wi-Fi, 16 GB"},
-    {"id": 5, "name": "Fire TV", "price": "$39.99", "match": "Amazon Fire Tv"},
-    {"id": 6, "name": "Fire Kids Tablet", "price": "$99.99", "match": "Fire Kids Edition Tablet"},
+    {"id": 1, "name": "Fire 7 Tablet", "price": "$49.99", "match": "Fire Tablet, 7 Display", "icon": "📱"},
+    {"id": 2, "name": "Echo Speaker", "price": "$89.99", "match": "Echo (White)", "icon": "🔊"},
+    {"id": 3, "name": "Kindle Paperwhite", "price": "$119.99", "match": "Kindle Paperwhite", "icon": "📖"},
+    {"id": 4, "name": "Fire HD 8 Tablet", "price": "$79.99", "match": "All-New Fire HD 8 Tablet, 8 HD Display, Wi-Fi, 16 GB", "icon": "📱"},
+    {"id": 5, "name": "Fire TV", "price": "$39.99", "match": "Amazon Fire Tv", "icon": "📺"},
+    {"id": 6, "name": "Fire Kids Tablet", "price": "$99.99", "match": "Fire Kids Edition Tablet", "icon": "🧒"},
 ]
 
 # Load the trained model once at startup, kept "warm" in memory for all requests
