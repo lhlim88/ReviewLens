@@ -23,6 +23,7 @@ REVIEWS_DB = "reviews.db"
 ANNOTATIONS_DB = "annotations.db"
 METRICS_FILE = "model/metrics.json"
 MODEL_FILE = "model/sentiment_model.pkl"
+DEMO_MODE = os.environ.get("DEMO_MODE", "false").lower() == "true"
 
 # Fake storefront products, mapped to real product_name substrings in reviews.db
 PRODUCTS = [
@@ -102,21 +103,22 @@ def get_annotation_count():
 @app.route("/annotate", methods=["GET", "POST"])
 def annotate():
     if request.method == "POST":
-        review_id = request.form["review_id"]
-        sentiment = request.form["sentiment"]
-        category = request.form["category"]
-        confidence = request.form["confidence"]
-        notes = request.form.get("notes", "")
+        if not DEMO_MODE:
+            review_id = request.form["review_id"]
+            sentiment = request.form["sentiment"]
+            category = request.form["category"]
+            confidence = request.form["confidence"]
+            notes = request.form.get("notes", "")
 
-        conn = sqlite3.connect(ANNOTATIONS_DB)
-        conn.execute(
-            """INSERT INTO annotations
-               (review_id, sentiment, category, confidence, notes, timestamp)
-               VALUES (?, ?, ?, ?, ?, ?)""",
-            (review_id, sentiment, category, confidence, notes, datetime.now().isoformat())
-        )
-        conn.commit()
-        conn.close()
+            conn = sqlite3.connect(ANNOTATIONS_DB)
+            conn.execute(
+                """INSERT INTO annotations
+                (review_id, sentiment, category, confidence, notes, timestamp)
+                VALUES (?, ?, ?, ?, ?, ?)""",
+                (review_id, sentiment, category, confidence, notes, datetime.now().isoformat())
+            )
+            conn.commit()
+            conn.close()
 
     review = get_random_unannotated_review()
     count = get_annotation_count()
@@ -162,7 +164,7 @@ def product_detail(product_id):
             (f"%{product['match']}%",)
         ).fetchall()
     conn.close()
-    
+
     reviews_with_predictions = []
     for (text,) in rows:
         label, confidence = predict_sentiment(text)
