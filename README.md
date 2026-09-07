@@ -8,9 +8,34 @@ training, and live deployment to a demo storefront.
 Full pipeline documentation: see `docs/PROJECT_DOCUMENTATION.md`
 Annotation business rules and their revision history: see `GUIDELINES.md`
 
-**Live demo:** [reviewlens-x8xk.onrender.com](https://reviewlens-x8xk.onrender.com)
+
+## Try it yourself
+ **Live Demo:**
+ **Click link here:**
+[reviewlens-x8xk.onrender.com](https://reviewlens-x8xk.onrender.com)
 (hosted on Render's free tier, the first load after a period of
 inactivity may take 30–60 seconds to spin up)
+ 
+**`/annotate`** the actual annotation tool used to hand-label the 152
+reviews. This is pure human labeling based on the annotation rules in `GUIDELINES.md`.
+Note: this route runs in demo mode on the public deployment, so your submissions are not saved.
+
+**How to use it:**
+1. Read the review text and its star rating shown on the page
+2. Pick a **Sentiment** (Positive / Negative / Neutral) based on the text
+3. Pick a **Category** (Product Quality / Shipping Issue / Price-Value /
+   Customer Service / Other) — see `GUIDELINES.md` for definitions
+4. Set a **Confidence** score (1 = unsure, 5 = very confident)
+5. Optionally add a note explaining your reasoning, especially for
+   ambiguous cases.
+6. Click **Submit & Next** to move on to the next review
+ 
+**"Try it yourself" box** (on any product page) sends your typed text
+to the *trained model* for a live sentiment prediction. This one has a
+real limitation worth knowing before you try it: the model's vocabulary
+comes entirely from the 123 training reviews, so it will confidently
+misjudge text containing words it never saw during training (e.g.,
+"horrible," "hate," or misspellings like "dissappointed").
 
 ## What this project demonstrates
 
@@ -60,5 +85,19 @@ split, n=25):
 | Neutral | 0.00 | 0.00 | 0.00 | 3 |
 | Positive | 0.75 | 0.86 | 0.80 | 14 |
 
+## Design Philosophy: Why Build the Model From Scratch
+ 
+**No pre-built sentiment lexicons** (e.g., VADER, SentiWordNet). These
+are ready-made dictionaries mapping words directly to sentiment scores,
+built from millions of examples and swapping one in would have sidestepped
+the vocabulary-coverage problem entirely, with zero hand-annotation
+required. I did not use these libraries as I wanted understand what is really 
+going on under the hood of the annotation and model-training workflow.
+
+**No LLM APIs** (e.g., Anthropic, OpenAI) for the sentiment classifier
+itself. A modern LLM would likely classify sentiment more accurately,
+and with far less setup, than a TF-IDF + Logistic Regression model
+trained on 123 examples. Similar to the previous parahraph, the deliberate choice was to build the classical pipeline from scratch and using them would have substituted a black box for the exact process I wanted to learn. 
+ 
 
 

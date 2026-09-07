@@ -5,8 +5,13 @@
   <title>ReviewLens - Annotate</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-  <h1>Annotate Review</h1>
+<body class="dashboard-page">
+  <header class="dash-header">
+    <p class="dash-eyebrow">ReviewLens</p>
+    <h1>Annotate Review</h1>
+    <a class="dash-back" href="{{ url_for('store_home') }}">&larr; Back to store</a>
+  </header>
+
   <p>Labeled so far: {{ annotated_count }}</p>
 
   <div class="review-card">
