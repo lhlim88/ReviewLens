@@ -14,9 +14,6 @@ body {
 .badge-negative { background-color: #c62828; }
 .badge-neutral  { background-color: #757575; }
 
-/* TODO: storefront grid, product card, annotation form styling */
-
-
 /* ============ Dashboard & site-wide nav ============ */
 
 .dashboard-page {
@@ -96,6 +93,23 @@ body {
   margin: 0;
   color: #6b6558;
   font-size: 0.95rem;
+}
+.dash-back {
+  color: #3a5a78;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.dash-back:hover { text-decoration: underline; }
+
+/* Page content wrapper - single source of horizontal alignment
+   for everything below the header on simpler pages (e.g. annotate) */
+.page-wrap {
+  padding: 0 3rem 3rem;
+}
+.page-sub {
+  margin: 0 0 1.5rem;
+  color: #6b6558;
+  font-size: 0.92rem;
 }
 
 /* Stat cards */
@@ -235,7 +249,7 @@ body {
 .dot-neutral { background: #a89a7c; }
 
 @media (max-width: 640px) {
-  .site-nav, .dash-header, .stat-row, .dash-grid, .panel-wide {
+  .site-nav, .dash-header, .stat-row, .dash-grid, .panel-wide, .page-wrap {
     margin-left: 1.25rem;
     margin-right: 1.25rem;
     padding-left: 1.25rem;
@@ -355,8 +369,51 @@ body {
   min-height: 1.2rem;
 }
 
-.page-sub {
-  margin: 0 3rem 1.5rem;
-  color: #6b6558;
-  font-size: 0.92rem;
+/* ============ Annotation page ============ */
+
+.review-card {
+  background: #fff;
+  border: 1px solid #e6e2d8;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 0 0 1.5rem;
+  max-width: 640px;
 }
+.review-card p { margin: 0.3rem 0; }
+
+form {
+  margin: 0;
+  max-width: 640px;
+}
+form label {
+  display: block;
+  margin-bottom: 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #4a473e;
+}
+form select, form textarea {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #d8d2c1;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+}
+form textarea { max-width: 100%; resize: vertical; }
+form button[type="submit"] {
+  background: #26405c;
+  color: #fff;
+  border: none;
+  padding: 0.65rem 1.3rem;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+form button[type="submit"]:hover { background: #1c3148; }
