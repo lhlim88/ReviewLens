@@ -20,43 +20,43 @@ AI systems (chatbots, recommendation engines, search, translation) all rely on h
 
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌────────────────────┐
-│   Raw Reviews    │ --> │  Data Cleaning    │ --> │    reviews.db       │
-│  (CSV dataset)   │     │  (clean_data.py)  │     │   (SQLite)           │
+│   Raw Reviews   │ --> │  Data Cleaning   │ --> │    reviews.db      │
+│  (CSV dataset)  │     │  (clean_data.py) │     │   (SQLite)         │
 └─────────────────┘     └──────────────────┘     └──────────┬─────────┘
-                                                              │
-                                                              v
+                                                            │
+                                                            v
                                                   ┌────────────────────┐
-                                                  │  Annotation Tool    │
-                                                  │  (Flask: /annotate) │
+                                                  │  Annotation Tool   │
+                                                  │  (Flask: /annotate)│
                                                   └──────────┬─────────┘
                                                               │
                                                               v
                                                   ┌────────────────────┐
-                                                  │   annotations.db    │
-                                                  │      (SQLite)       │
+                                                  │   annotations.db   │
+                                                  │      (SQLite)      │
                                                   └──────────┬─────────┘
                                                               │
                                                               v
                                                   ┌────────────────────┐
-                                                  │  Model Training      │
-                                                  │  (train_model.py)    │
-                                                  │  TF-IDF + Classifier │
+                                                  │ Model Training     │
+                                                  │ (train_model.py)   │
+                                                  │ TF-IDF + Classifier│
                                                   └──────────┬─────────┘
                                                               │
                                                               v
                                                   ┌────────────────────┐
-                                                  │ sentiment_model.pkl  │
-                                                  │  (saved, loaded once)│
+                                                  │ sentiment_model.pkl│
+                                                  │(saved, loaded once)│
                                                   └───────┬──────┬─────┘
                                                           │      │
                                     ┌─────────────────────┘      └───────────────┐
                                     v                                            v
                         ┌────────────────────┐                     ┌────────────────────┐
-                        │   Dashboard          │                     │   Storefront          │
-                        │   (/dashboard)        │                     │  (/, /product/<id>)   │
-                        │   Charts via SQL       │                     │  live predictions +   │
-                        │   queries on            │                     │  /predict endpoint     │
-                        │   annotations.db        │                     │  ("try it yourself")   │
+                        │   Dashboard        │                     │   Storefront       │
+                        │   (/dashboard)     │                     │  (/, /product/<id>)│
+                        │   Charts via SQL   │                     │  live predictions +│
+                        │   queries on       │                     │  /predict endpoint │
+                        │   annotations.db   │                     │ ("try it yourself")│
                         └────────────────────┘                     └────────────────────┘
 ```
 
